@@ -36,4 +36,5 @@ if (!output.contracts || !output.contracts['Inbox.sol'] || !output.contracts['In
 }
 
 // 3. Export the compiled contract data so your tests can use it
-console.log(JSON.stringify(output.contracts['Inbox.sol'].Inbox, null, 2));
+//console.log(JSON.stringify(output.contracts['Inbox.sol'].Inbox, null, 2));
+module.exports = output.contracts['Inbox.sol'].Inbox;
