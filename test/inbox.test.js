@@ -5,6 +5,7 @@ const { ethers } = require('hardhat'); // Use Hardhat's built-in tools, loads th
 describe("Inbox", () => {
   let accounts;
   let inbox;
+  const INITIAL_STRING = 'Hi there!';
 
   beforeEach(async () => { //async to ensure we wait for the accounts to be fetched before running tests
     //--- Hardhat provides a list of pre-funded accounts automatically
@@ -26,7 +27,7 @@ describe("Inbox", () => {
     // const inbox = await Inbox.connect(accounts[2]).deploy('Hi there!');
 
     // 3) Deploy
-    inbox = await Inbox.deploy('Hi there!');
+    inbox = await Inbox.deploy(INITIAL_STRING);
     await inbox.waitForDeployment();
     
     // 4) Log
