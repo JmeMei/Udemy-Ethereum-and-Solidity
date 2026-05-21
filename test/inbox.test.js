@@ -33,6 +33,8 @@ describe("Inbox", () => {
     //Log
     // console.log("Contract deployed at address:", inbox); 
     console.log("Contract deployed at address:", inbox.target); // GOOD: Logs only what you actually need to see
+    // This will show you exactly which methods Ethers sees
+    console.log(inbox.interface.fragments.map(f => f.name));
 
     // Assert
     assert.ok(inbox.target);
