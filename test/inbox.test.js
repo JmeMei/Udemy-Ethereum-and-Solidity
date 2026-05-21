@@ -1,6 +1,7 @@
 const assert = require('assert'); //Loads the built-in node.js tools
 const { ethers } = require('hardhat'); // Use Hardhat's built-in tools, loads the ethers library, a standard tool to talk to Ethereum
 
+//npx hardhat test --show-stack-traces
 describe("Inbox", () => {
   let accounts;
 
