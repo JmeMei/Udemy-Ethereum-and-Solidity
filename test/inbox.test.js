@@ -26,7 +26,7 @@ describe("Inbox", () => {
     // const inbox = await Inbox.connect(accounts[2]).deploy('Hi there!');
 
     // 3) Deploy
-    const inbox = await Inbox.deploy('Hi there!');
+    inbox = await Inbox.deploy('Hi there!');
     await inbox.waitForDeployment();
     
     // 4) Log
