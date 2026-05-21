@@ -4,21 +4,20 @@ const { ethers } = require('hardhat'); // Use Hardhat's built-in tools, loads th
 //npx hardhat test --show-stack-traces
 describe("Inbox", () => {
   let accounts;
+  let inbox;
 
   beforeEach(async () => { //async to ensure we wait for the accounts to be fetched before running tests
-    // Hardhat provides a list of pre-funded accounts automatically
+    //--- Hardhat provides a list of pre-funded accounts automatically
     accounts = await ethers.getSigners(); //Instead of web3.eth.getAccounts(), we use ethers.getSigners() to get the list of accounts provided by Hardhat. This returns an array of Signer objects, which represent the accounts and allow us to interact with them (e.g., send transactions).
-    
     // Equivalent to your console.log(fetchedAccounts)
     // We print the address of the first account to verify it's connected
     console.log("Using account:", accounts[0].address);
-  });
 
-  it("deploys a contract", async () => {
-    // Using your compiled code
+    //--- DEPLOYMENT CODE ---//
+    //Moved deployment to beforeEach so both tests can use the same contract 
+    // 1) Using your compiled code
     const { abi, evm } = require('../compile');
-    
-    // 1) Create the factory
+    // 2) Create the factory
     const Inbox = await ethers.getContractFactory(abi, evm.bytecode.object);
     
     // --- INSERT .connect() HERE ---
@@ -26,21 +25,31 @@ describe("Inbox", () => {
     // You are connecting the 'factory' to the 2nd account (index 1)
     // const inbox = await Inbox.connect(accounts[2]).deploy('Hi there!');
 
-    // 2) Deploy
+    // 3) Deploy
     const inbox = await Inbox.deploy('Hi there!');
     await inbox.waitForDeployment();
     
-    // 3) Log
+    // 4) Log
     // console.log("Contract deployed at address:", inbox); 
-   
-    console.log("Contract deployed at address:", inbox.target); // GOOD: Logs only what you actually need to see
-    
-    // This will show you exactly which methods Ethers sees
-    console.log(inbox.interface.fragments.map(f => f.name));
+    //console.log("Contract deployed at address:", inbox.target); // GOOD: Logs only what you actually need to see
+    //console.log(inbox.interface.fragments.map(f => f.name)); // This will show you exactly which methods Ethers sees
 
-    // 4) Assert
-    assert.ok(inbox.target);
+    // 5) Assert
+    //assert.ok(inbox.target); //f inbox.target is missing (is null or undefined), the assertion fails, and Mocha immediately stops the test and reports an error.
+    //--- END OF DEPLOYMENT CODE ---//
   });
+
+  it("deploys a contract", async () => {
+    console.log("Test 1: Contract deployed at address:", inbox.target);
+    assert.ok(inbox.target); // Verifies the contract has an address
+  });
+
+  it('has a default message', async () => {
+    console.log("Test 2: Contract deployed at address:", inbox.target);
+    const message = await inbox.message(); // Ethers calls the getter function directly
+    assert.equal(message, 'Hi there!'); // Verifies that the default message is correct 
+  });
+
 });
 
 // describe('Inbox', () => {
