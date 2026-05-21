@@ -30,6 +30,10 @@ describe("Inbox", () => {
     const inbox = await Inbox.deploy('Hi there!');
     await inbox.waitForDeployment();
     
+    //Log
+    // console.log("Contract deployed at address:", inbox); 
+    console.log("Contract deployed at address:", inbox.target); // GOOD: Logs only what you actually need to see
+
     // Assert
     assert.ok(inbox.target);
   });
