@@ -18,7 +18,7 @@ describe("Inbox", () => {
     // Using your compiled code
     const { abi, evm } = require('../compile');
     
-    // Create the factory
+    // 1) Create the factory
     const Inbox = await ethers.getContractFactory(abi, evm.bytecode.object);
     
     // --- INSERT .connect() HERE ---
@@ -26,17 +26,19 @@ describe("Inbox", () => {
     // You are connecting the 'factory' to the 2nd account (index 1)
     // const inbox = await Inbox.connect(accounts[2]).deploy('Hi there!');
 
-    // Deploy
+    // 2) Deploy
     const inbox = await Inbox.deploy('Hi there!');
     await inbox.waitForDeployment();
     
-    //Log
+    // 3) Log
     // console.log("Contract deployed at address:", inbox); 
+   
     console.log("Contract deployed at address:", inbox.target); // GOOD: Logs only what you actually need to see
+    
     // This will show you exactly which methods Ethers sees
     console.log(inbox.interface.fragments.map(f => f.name));
 
-    // Assert
+    // 4) Assert
     assert.ok(inbox.target);
   });
 });
