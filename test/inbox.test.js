@@ -21,6 +21,11 @@ describe("Inbox", () => {
     // Create the factory
     const Inbox = await ethers.getContractFactory(abi, evm.bytecode.object);
     
+    // --- INSERT .connect() HERE ---
+    //If you want to use another account (e.g., accounts[2]) to deploy the contract, you can connect the factory to that account before deploying. This is done using the .connect() method on the factory. For example:
+    // You are connecting the 'factory' to the 2nd account (index 1)
+    // const inbox = await Inbox.connect(accounts[2]).deploy('Hi there!');
+
     // Deploy
     const inbox = await Inbox.deploy('Hi there!');
     await inbox.waitForDeployment();
