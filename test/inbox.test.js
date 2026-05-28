@@ -51,6 +51,13 @@ describe("Inbox", () => {
     assert.equal(message, 'Hi there!'); // Verifies that the default message is correct 
   });
 
+  it('can change the message', async () => {
+    console.log("Test 3: Contract deployed at address:", inbox.target);
+    await inbox.setMessage('bye'); // Calls the setMessage function to change the message to 'bye'
+    const message = await inbox.message(); // Retrieves the updated message
+    assert.equal(message, 'bye'); // Verifies that the message was updated correctly
+  });
+
 });
 
 // describe('Inbox', () => {
